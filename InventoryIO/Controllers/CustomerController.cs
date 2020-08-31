@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Business.InventoryIO.Core;
@@ -46,8 +48,7 @@ namespace InventoryIO.Controllers
             string messageAlert = string.Empty;
             long customerIdResult = 0;
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
 
             request.CreatedBy = currentUserId;
             request.CreatedTime = DateTime.Now;
@@ -92,8 +93,7 @@ namespace InventoryIO.Controllers
             string messageAlert = string.Empty;
             long customerIdResult = 0;
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
 
             request.CreatedBy = currentUserId;
             request.CreatedTime = DateTime.Now;
@@ -129,8 +129,7 @@ namespace InventoryIO.Controllers
             string messageAlert = string.Empty;
             long customerIdResult = 0;
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
 
             request.CreatedBy = currentUserId;
             request.CreatedTime = DateTime.Now;
@@ -166,8 +165,7 @@ namespace InventoryIO.Controllers
             string messageAlert = string.Empty;
             bool customerIdResult = false;
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
             var passedUserResult = _customerService.GetAllCustomerDetails().Where(m => m.CustomerId == request.CustomerId).FirstOrDefault();
 
             request.CreatedTime = passedUserResult.CreatedTime;

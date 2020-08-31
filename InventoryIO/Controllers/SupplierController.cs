@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Business.InventoryIO.Core;
@@ -46,9 +48,8 @@ namespace InventoryIO.Controllers
             bool isSucess = false;
             string messageAlert = string.Empty;
             long supplierIdResult = 0;
-
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
 
             request.CreatedBy = currentUserId;
             request.CreatedTime = DateTime.Now;
@@ -94,8 +95,7 @@ namespace InventoryIO.Controllers
             string messageAlert = string.Empty;
             bool supplierIdResult = false;
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
             var passedSupplierResult = _supplierService.GetAllSupplierDetails().Where(m => m.SupplierId == request.SupplierId).FirstOrDefault();
 
             request.CreatedTime = passedSupplierResult.CreatedTime;

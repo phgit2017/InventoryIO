@@ -11,6 +11,7 @@
         public Product()
         {
             CustomerPrices = new HashSet<CustomerPrice>();
+            PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
         }
 
         public long ProductID { get; set; }
@@ -19,7 +20,7 @@
         [StringLength(16)]
         public string ProductCode { get; set; }
 
-        [StringLength(32)]
+        [StringLength(256)]
         public string ProductDescription { get; set; }
 
         [StringLength(32)]
@@ -38,5 +39,7 @@
         public DateTime? ModifiedTime { get; set; }
 
         public virtual ICollection<CustomerPrice> CustomerPrices { get; set; }
+
+        public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
     }
 }

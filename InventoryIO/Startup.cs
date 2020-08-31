@@ -47,9 +47,13 @@ namespace InventoryIO
             services.AddScoped(typeof(IInventoryIORepository<>), typeof(InventoryIORepository<>));
 
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IUnitService, UnitService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddSession();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -72,6 +76,7 @@ namespace InventoryIO
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+            app.UseMvcWithDefaultRoute();
 
             app.UseMvc(routes =>
             {

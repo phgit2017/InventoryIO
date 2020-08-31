@@ -20,9 +20,18 @@ namespace DataAccess.Entities.Context
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserRoleDetail> UserRoleDetails { get; set; }
+        public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+        public virtual DbSet<OrderType> OrderTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OrderType>()
+                .HasKey(c => new { c.OrderTypeID });
+
+            modelBuilder.Entity<PurchaseOrderDetail>()
+                .HasKey(c => new { c.SupplierID, c.ProductID, c.PurchaseOrderID });
+
             modelBuilder.Entity<CustomerPrice>()
                 .HasKey(c => new { c.CustomerID, c.ProductID });
 

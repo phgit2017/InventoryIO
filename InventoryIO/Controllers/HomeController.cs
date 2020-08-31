@@ -20,6 +20,7 @@ namespace InventoryIO.Controllers
 
         public IActionResult Index()
         {
+            //var x = _unitServices.GetAllUnitDetails();
             return View();
         }
 

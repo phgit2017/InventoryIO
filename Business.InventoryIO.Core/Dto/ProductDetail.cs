@@ -9,14 +9,10 @@ namespace Business.InventoryIO.Core.Dto
     {
         public long ProductId { get; set; }
 
-        [Required]
-        [StringLength(16)]
         public string ProductCode { get; set; }
 
-        [StringLength(32)]
         public string ProductDescription { get; set; }
-
-        [StringLength(32)]
+        
         public string ProductExtension { get; set; }
 
         public decimal? Quantity { get; set; }
@@ -32,7 +28,7 @@ namespace Business.InventoryIO.Core.Dto
         [StringLength(16)]
         public string ProductCode { get; set; }
 
-        [StringLength(32)]
+        [StringLength(256)]
         public string ProductDescription { get; set; }
 
         [StringLength(32)]
