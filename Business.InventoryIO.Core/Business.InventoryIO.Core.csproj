@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess.Database.InventoryIO\DataAccess.Database.InventoryIO.csproj" />
+    <ProjectReference Include="..\DataAccess.Repository.InventoryIO\DataAccess.Repository.InventoryIO.csproj" />
+    <ProjectReference Include="..\Infrastructure.Utilities\Infrastructure.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
