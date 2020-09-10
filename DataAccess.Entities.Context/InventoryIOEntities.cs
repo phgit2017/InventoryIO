@@ -15,6 +15,7 @@ namespace DataAccess.Entities.Context
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<MenuDetail> MenuDetails { get; set; }
         public virtual DbSet<MenuRoleDetail> MenuRoleDetails { get; set; }
+        public virtual DbSet<OrderTransactionType> OrderTransactionTypes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
@@ -23,11 +24,24 @@ namespace DataAccess.Entities.Context
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         public virtual DbSet<OrderType> OrderTypes { get; set; }
+        public virtual DbSet<ProductHistory> ProductHistory { get; set; }
+        public virtual DbSet<SalesOrder> SalesOrders { get; set; }
+        public virtual DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OrderType>()
                 .HasKey(c => new { c.OrderTypeID });
+
+            modelBuilder.Entity<OrderTransactionType>()
+                .HasKey(c => new { c.OrderTransactionTypeID });
+
+            modelBuilder.Entity<ProductHistory>()
+                .HasKey(c => new { c.ProductID, c.OrderTransactionTypeID });
+
+            modelBuilder.Entity<SalesOrderDetail>()
+                .HasKey(c => new { c.ProductID, c.SalesOrderID, c.UnitID });
 
             modelBuilder.Entity<PurchaseOrderDetail>()
                 .HasKey(c => new { c.SupplierID, c.ProductID, c.PurchaseOrderID });

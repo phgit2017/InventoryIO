@@ -55,7 +55,6 @@ namespace Business.InventoryIO.Core.Extensions
             return entity;
         }
 
-
         public static dbentities.CustomerPrice DtoToEntity(this CustomerPriceDetailRequest request)
         {
             dbentities.CustomerPrice entity = null;
@@ -88,6 +87,57 @@ namespace Business.InventoryIO.Core.Extensions
                     Password = request.Password,
                     UserRoleID = request.UserRoleId,
                     IsActive = request.IsActive,
+                    CreatedBy = request.CreatedBy,
+                    CreatedTime = request.CreatedTime,
+                    ModifiedBy = request.ModifiedBy,
+                    ModifiedTime = request.ModifiedTime
+                };
+            }
+
+            return entity;
+        }
+
+        public static dbentities.Product DtoToEntity(this ProductDetailRequest request)
+        {
+            dbentities.Product entity = null;
+
+            if (request != null)
+            {
+                entity = new dbentities.Product
+                {
+                    ProductID = request.ProductId,
+                    ProductCode = request.ProductCode,
+                    ProductDescription = request.ProductDescription,
+                    ProductExtension = request.ProductExtension,
+                    Quantity = request.Quantity,
+
+                    IsActive = request.IsActive,
+                    CreatedBy = request.CreatedBy,
+                    CreatedTime = request.CreatedTime,
+                    ModifiedBy = request.ModifiedBy,
+                    ModifiedTime = request.ModifiedTime
+                };
+            }
+
+            return entity;
+        }
+
+        public static dbentities.ProductHistory DtoToEntity(this ProductHistoryDetailRequest request)
+        {
+            dbentities.ProductHistory entity = null;
+
+            if (request != null)
+            {
+                entity = new dbentities.ProductHistory
+                {
+                    ProductHistoryID = request.ProductHistoryId,
+                    ProductID = request.ProductId,
+                    QuantityAmmend = request.QuantityAmmend,
+                    QuantityPrevious = request.QuantityPrevious,
+                    QuantityCurrent = request.QuantityCurrent,
+                    OrderTransactionTypeID = request.OrderTransactionTypeId,
+                    OrderRemarks = request.OrderRemarks,
+
                     CreatedBy = request.CreatedBy,
                     CreatedTime = request.CreatedTime,
                     ModifiedBy = request.ModifiedBy,

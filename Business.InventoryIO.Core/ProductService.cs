@@ -14,15 +14,20 @@ namespace Business.InventoryIO.Core
     public partial class ProductService
     {
         IInventoryIORepository<dbentities.Product> _productService;
+        IInventoryIORepository<dbentities.ProductHistory> _productHistoryService;
 
         private dbentities.Product product;
+        private dbentities.ProductHistory productHistory;
 
         public ProductService(
-            IInventoryIORepository<dbentities.Product> productService)
+            IInventoryIORepository<dbentities.Product> productService,
+            IInventoryIORepository<dbentities.ProductHistory> productHistoryService)
         {
             this._productService = productService;
+            this._productHistoryService = productHistoryService;
 
             this.product = new dbentities.Product();
+            this.productHistory = new dbentities.ProductHistory();
         }
     }
 
@@ -48,6 +53,42 @@ namespace Business.InventoryIO.Core
                          };
 
             return result;
+        }
+
+        public long SaveProduct(ProductDetailRequest request)
+        {
+            this.product = request.DtoToEntity();
+            var item = this._productService .Insert(this.product);
+            if (item == null)
+            {
+                return 0;
+            }
+
+            return item.ProductID;
+        }
+
+        public bool UpdateDetails(ProductDetailRequest request)
+        {
+            this.product = request.DtoToEntity();
+            var item = _productService.Update2(this.product);
+            if (item == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public long SaveProductHistory(ProductHistoryDetailRequest request)
+        {
+            this.productHistory = request.DtoToEntity();
+            var item = this._productHistoryService.Insert(this.productHistory);
+            if (item == null)
+            {
+                return 0;
+            }
+
+            return item.ProductHistoryID;
         }
     }
 }

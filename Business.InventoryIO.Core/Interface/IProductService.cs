@@ -10,5 +10,8 @@ namespace Business.InventoryIO.Core.Interface
     public interface IProductService
     {
         IQueryable<ProductDetail> GetAllProductDetails();
+        long SaveProduct(ProductDetailRequest request);
+        bool UpdateDetails(ProductDetailRequest request);
+        long SaveProductHistory(ProductHistoryDetailRequest request);
     }
 }

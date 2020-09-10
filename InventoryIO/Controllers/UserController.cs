@@ -28,7 +28,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpGet]
-        public JsonResult UserList()
+        public ActionResult UserList()
         {
             List<UserDetail> userDetailsResult = new List<UserDetail>();
 
@@ -46,8 +46,7 @@ namespace InventoryIO.Controllers
             //}
             #endregion
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
 
             userDetailsResult = _userService.GetAllUserDetails().Where(m => m.UserId != currentUserId && m.IsActive).ToList();
             var response = new
@@ -56,19 +55,18 @@ namespace InventoryIO.Controllers
                 isSuccess = true,
                 messageAlert = ""
             };
-            return Json(response);
+            return Ok(response);
 
         }
 
         [HttpPost]
-        public JsonResult AddNewUserDetails(UserDetailRequest request)
+        public ActionResult AddNewUserDetails(UserDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
             long userIdResult = 0;
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
 
             request.CreatedBy = currentUserId;
             request.CreatedTime = DateTime.Now;
@@ -80,11 +78,11 @@ namespace InventoryIO.Controllers
 
                 if (userIdResult == -100)
                 {
-                    return Json(new { isSucess = isSucess, messageAlert = Messages.UserNameValidation });
+                    return Ok(new { isSucess = isSucess, messageAlert = Messages.UserNameValidation });
                 }
                 if (userIdResult == 0)
                 {
-                    return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                    return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
                 }
 
                 isSucess = true;
@@ -94,24 +92,23 @@ namespace InventoryIO.Controllers
                     messageAlert = messageAlert
                 };
 
-                return Json(response);
+                return Ok(response);
             }
             else
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.ErrorOccuredDuringProcessing });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.ErrorOccuredDuringProcessing });
             }
 
         }
 
         [HttpPost]
-        public JsonResult UpdateUserDetails(UserDetailRequest request)
+        public ActionResult UpdateUserDetails(UserDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
             bool userIdResult = false;
 
-            //var currentUserId = Session[LookupKey.SessionVariables.UserId].IsNull() ? 0 : Convert.ToInt64(Session[LookupKey.SessionVariables.UserId]);
-            var currentUserId = 0;
+            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
 
             var passedUserResult = _userService.GetAllUserDetails().Where(m => m.UserId == request.UserId).FirstOrDefault();
 
@@ -131,7 +128,7 @@ namespace InventoryIO.Controllers
 
             if (!codeUserDetailResult.IsNull())
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.UserNameValidation });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.UserNameValidation });
             }
             #endregion
 
@@ -139,7 +136,7 @@ namespace InventoryIO.Controllers
 
             if (!userIdResult)
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
             }
 
             isSucess = true;
@@ -149,7 +146,7 @@ namespace InventoryIO.Controllers
                 messageAlert = messageAlert
             };
 
-            return Json(response);
+            return Ok(response);
             //}
             //else
             //{
@@ -165,14 +162,14 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public JsonResult AuthenticateLogin(AuthenticateUserRequest request)
+        public ActionResult AuthenticateLogin(AuthenticateUserRequest request)
         {
             bool isSuccess = false;
             var authenticateLoginResult = _userService.AuthenticateLogin(request);
 
             if (authenticateLoginResult == null)
             {
-                return Json(new
+                return Ok(new
                 {
                     isSucess = isSuccess,
                     messageAlert = "Invalid User Details"
@@ -191,18 +188,18 @@ namespace InventoryIO.Controllers
                 userDetailResult = authenticateLoginResult,
                 isSuccess = isSuccess
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpPost]
-        public JsonResult Logout()
+        public ActionResult Logout()
         {
             HttpContext.Response.Cookies.Delete(LookupKey.SessionVariables.UserName);
             HttpContext.Response.Cookies.Delete(LookupKey.SessionVariables.UserRoleName);
             HttpContext.Session.Clear();
 
             var response = new { isSuccess = true, messageAlert = string.Empty };
-            return Json(response);
+            return Ok(response);
         }
     }
 }

@@ -12,6 +12,7 @@
         {
             CustomerPrices = new HashSet<CustomerPrice>();
             PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
+            ProductHistory = new HashSet<ProductHistory>();
         }
 
         public long ProductID { get; set; }
@@ -41,5 +42,7 @@
         public virtual ICollection<CustomerPrice> CustomerPrices { get; set; }
 
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+
+        public virtual ICollection<ProductHistory> ProductHistory { get; set; }
     }
 }

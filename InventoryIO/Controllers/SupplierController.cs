@@ -29,7 +29,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpGet]
-        public JsonResult SupplierList()
+        public ActionResult SupplierList()
         {
             List<SupplierDetail> supplierDetailResult = new List<SupplierDetail>();
             
@@ -39,11 +39,11 @@ namespace InventoryIO.Controllers
             {
                 SupplierDetailResult = supplierDetailResult
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpPost]
-        public JsonResult AddNewSupplierDetails(SupplierDetailRequest request)
+        public ActionResult AddNewSupplierDetails(SupplierDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -61,11 +61,11 @@ namespace InventoryIO.Controllers
 
                 if (supplierIdResult == -100)
                 {
-                    return Json(new { isSucess = isSucess, messageAlert = Messages.SupplierCodeValidation });
+                    return Ok(new { isSucess = isSucess, messageAlert = Messages.SupplierCodeValidation });
                 }
                 if (supplierIdResult == 0)
                 {
-                    return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                    return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
                 }
 
                 isSucess = true;
@@ -75,11 +75,11 @@ namespace InventoryIO.Controllers
                     messageAlert = messageAlert
                 };
 
-                return Json(response);
+                return Ok(response);
             }
             else
             {
-                return Json(new
+                return Ok(new
                 {
                     isSucess = isSucess,
                     messageAlert = Messages.ErrorOccuredDuringProcessing
@@ -89,7 +89,7 @@ namespace InventoryIO.Controllers
 
 
         [HttpPost]
-        public JsonResult UpdateSupplierDetails(SupplierDetailRequest request)
+        public ActionResult UpdateSupplierDetails(SupplierDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -110,7 +110,7 @@ namespace InventoryIO.Controllers
 
             if (!codeSupplierDetailResult.IsNull())
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.SupplierCodeValidation });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.SupplierCodeValidation });
             }
             #endregion
 
@@ -118,7 +118,7 @@ namespace InventoryIO.Controllers
 
             if (!supplierIdResult)
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
             }
 
             isSucess = true;
@@ -128,7 +128,7 @@ namespace InventoryIO.Controllers
                 messageAlert = messageAlert
             };
 
-            return Json(response);
+            return Ok(response);
         }
     }
 }

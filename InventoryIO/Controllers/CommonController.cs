@@ -41,7 +41,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpGet]
-        public JsonResult CustomerList()
+        public ActionResult CustomerList()
         {
             List<CustomerDetail> customerDetailResult = new List<CustomerDetail>();
 
@@ -52,11 +52,11 @@ namespace InventoryIO.Controllers
             {
                 result = customerDetailResult
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpGet]
-        public JsonResult CustomerListByCode(string customerCode)
+        public ActionResult CustomerListByCode(string customerCode)
         {
             List<CustomerDetail> customerDetailResult = new List<CustomerDetail>();
 
@@ -67,11 +67,11 @@ namespace InventoryIO.Controllers
             {
                 result = customerDetailResult
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpGet]
-        public JsonResult CustomerAndProductAndPriceList()
+        public ActionResult CustomerAndProductAndPriceList()
         {
             List<CustomerPricingDetail> customerPricingDetailResult = new List<CustomerPricingDetail>();
 
@@ -82,11 +82,11 @@ namespace InventoryIO.Controllers
             {
                 result = customerPricingDetailResult
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpGet]
-        public JsonResult CustomerAndProductPriceDetails(long customerId, long productId)
+        public ActionResult CustomerAndProductPriceDetails(long customerId, long productId)
         {
             //List<CustomerPricingDetail> customerPricingDetailResult = new List<CustomerPricingDetail>();
             CustomerPricingDetail customerPricingDetailResult = new CustomerPricingDetail();
@@ -100,11 +100,11 @@ namespace InventoryIO.Controllers
             {
                 result = customerPricingDetailResult
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpGet]
-        public JsonResult UnitList()
+        public ActionResult UnitList()
         {
             List<UnitDetail> unitDetailResult = new List<UnitDetail>();
 
@@ -116,11 +116,11 @@ namespace InventoryIO.Controllers
             {
                 result = unitDetailResult
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpGet]
-        public JsonResult SupplierList()
+        public ActionResult SupplierList()
         {
             List<SupplierDetail> supplierDetailResult = new List<SupplierDetail>();
 
@@ -132,11 +132,11 @@ namespace InventoryIO.Controllers
                 result = supplierDetailResult
             };
 
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpGet]
-        public JsonResult ProductList()
+        public ActionResult ProductList()
         {
             List<ProductDetail> productDetaillResult = new List<ProductDetail>();
 
@@ -148,7 +148,7 @@ namespace InventoryIO.Controllers
                 result = productDetaillResult
             };
 
-            return Json(response);
+            return Ok(response);
         }
     }
 }

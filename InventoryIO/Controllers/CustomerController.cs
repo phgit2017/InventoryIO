@@ -28,7 +28,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpGet]
-        public JsonResult CustomerList()
+        public ActionResult CustomerList()
         {
             List<CustomerDetail> customerDetailResult = new List<CustomerDetail>();
 
@@ -38,11 +38,11 @@ namespace InventoryIO.Controllers
             {
                 CustomerDetailResult = customerDetailResult
             };
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpPost]
-        public JsonResult AddNewCustomerDetails(CustomerDetailRequest request)
+        public ActionResult AddNewCustomerDetails(CustomerDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -60,11 +60,11 @@ namespace InventoryIO.Controllers
 
                 if (customerIdResult == -100)
                 {
-                    return Json(new { isSucess = isSucess, messageAlert = Messages.CustomerCodeValidation });
+                    return Ok(new { isSucess = isSucess, messageAlert = Messages.CustomerCodeValidation });
                 }
                 if (customerIdResult == 0)
                 {
-                    return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                    return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
                 }
 
                 isSucess = true;
@@ -74,11 +74,11 @@ namespace InventoryIO.Controllers
                     messageAlert = messageAlert
                 };
 
-                return Json(response);
+                return Ok(response);
             }
             else
             {
-                return Json(new
+                return Ok(new
                 {
                     isSucess = isSucess,
                     messageAlert = Messages.ErrorOccuredDuringProcessing
@@ -87,7 +87,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddNewCustomerPrice(CustomerPriceDetailRequest request)
+        public ActionResult AddNewCustomerPrice(CustomerPriceDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -110,11 +110,11 @@ namespace InventoryIO.Controllers
                     messageAlert = messageAlert
                 };
 
-                return Json(response);
+                return Ok(response);
             }
             else
             {
-                return Json(new
+                return Ok(new
                 {
                     isSucess = isSucess,
                     messageAlert = Messages.ErrorOccuredDuringProcessing
@@ -123,7 +123,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public JsonResult UpdateCustomerPriceDetails(CustomerPriceDetailRequest request)
+        public ActionResult UpdateCustomerPriceDetails(CustomerPriceDetailRequest request)
         {
             bool isSucess = false, customerPriceDeleteResult = false;
             string messageAlert = string.Empty;
@@ -138,14 +138,14 @@ namespace InventoryIO.Controllers
 
             if (!customerPriceDeleteResult)
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
             }
 
             customerIdResult = _customerService.SaveCustomerPrice(request);
 
             if (customerIdResult < 0)
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
             }
 
             isSucess = true;
@@ -155,11 +155,11 @@ namespace InventoryIO.Controllers
                 messageAlert = messageAlert
             };
 
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpPost]
-        public JsonResult UpdateCustomerDetails(CustomerDetailRequest request)
+        public ActionResult UpdateCustomerDetails(CustomerDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -180,7 +180,7 @@ namespace InventoryIO.Controllers
 
             if (!codeUserDetailResult.IsNull())
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.CustomerCodeValidation });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.CustomerCodeValidation });
             }
             #endregion
 
@@ -188,7 +188,7 @@ namespace InventoryIO.Controllers
 
             if (!customerIdResult)
             {
-                return Json(new { isSucess = isSucess, messageAlert = Messages.ServerError });
+                return Ok(new { isSucess = isSucess, messageAlert = Messages.ServerError });
             }
 
             isSucess = true;
@@ -198,7 +198,7 @@ namespace InventoryIO.Controllers
                 messageAlert = messageAlert
             };
 
-            return Json(response);
+            return Ok(response);
         }
     }
 }

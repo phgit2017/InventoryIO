@@ -18,6 +18,7 @@ using DataAccess.Repository.InventoryIO;
 using DataAccess.Repository.InventoryIO.Interface;
 using Business.InventoryIO.Core.Interface;
 using Business.InventoryIO.Core;
+using Newtonsoft.Json.Serialization;
 
 namespace InventoryIO
 {
@@ -39,6 +40,8 @@ namespace InventoryIO
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             services.AddScoped<IInventoryIOEntities, InventoryIOEntities>();
 

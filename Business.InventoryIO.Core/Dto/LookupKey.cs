@@ -6,6 +6,19 @@ namespace Business.InventoryIO.Core.Dto
 {
     public static class LookupKey
     {
+        public static class OrderType
+        {
+            public const int Single = 1;
+            public const int Batch = 2;
+        }
+
+        public static class OrderTransactionType
+        {
+            public const int PurchaseOrderId = 1;
+            public const int SalesOrderId = 2;
+            public const int CorrectionId = 3;
+        }
+
         public static class SessionVariables
         {
             public const string UserId = "UserId";

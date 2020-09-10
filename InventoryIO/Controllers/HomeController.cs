@@ -12,15 +12,8 @@ namespace InventoryIO.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly IUnitService _unitServices;
-        //public HomeController(IUnitService unitServices)
-        //{
-        //    this._unitServices = unitServices;
-        //}
-
         public IActionResult Index()
         {
-            //var x = _unitServices.GetAllUnitDetails();
             return View();
         }
 
