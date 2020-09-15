@@ -42,7 +42,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddNewCustomerDetails(CustomerDetailRequest request)
+        public ActionResult AddNewCustomerDetails([FromBody]CustomerDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -87,7 +87,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddNewCustomerPrice(CustomerPriceDetailRequest request)
+        public ActionResult AddNewCustomerPrice([FromBody]CustomerPriceDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -123,7 +123,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateCustomerPriceDetails(CustomerPriceDetailRequest request)
+        public ActionResult UpdateCustomerPriceDetails([FromBody]CustomerPriceDetailRequest request)
         {
             bool isSucess = false, customerPriceDeleteResult = false;
             string messageAlert = string.Empty;
@@ -159,7 +159,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateCustomerDetails(CustomerDetailRequest request)
+        public ActionResult UpdateCustomerDetails([FromBody]CustomerDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;

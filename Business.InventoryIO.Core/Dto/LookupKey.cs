@@ -17,6 +17,8 @@ namespace Business.InventoryIO.Core.Dto
             public const int PurchaseOrderId = 1;
             public const int SalesOrderId = 2;
             public const int CorrectionId = 3;
+            public const int QueueOrderId = 4;
+            public const int UpdateProductDetailsId = 5;
         }
 
         public static class SessionVariables

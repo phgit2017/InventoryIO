@@ -12,7 +12,7 @@ using Infrastructure.Utilities;
 
 namespace Business.InventoryIO.Core
 {
-    public partial class SalesOrderService
+    public partial class QueueOrderService
     {
         IProductService _productService;
         ICustomerService _customerService;
@@ -23,7 +23,7 @@ namespace Business.InventoryIO.Core
         private dbentities.SalesOrder salesOrder;
         private dbentities.SalesOrderDetail salesOrderDetail;
 
-        public SalesOrderService(
+        public QueueOrderService(
             IProductService productService,
             ICustomerService customerService,
         IInventoryIORepository<dbentities.SalesOrder> _salesOrderService,
@@ -39,7 +39,7 @@ namespace Business.InventoryIO.Core
         }
     }
 
-    public partial class SalesOrderService : IOrderService
+    public partial class QueueOrderService : IOrderService
     {
         public long UpdateOrderTransacion(OrderTransactionRequest orderTransactionRequest,
             List<OrderTransactionDetailRequest> orderTransactionDetailRequest)
@@ -86,45 +86,7 @@ namespace Business.InventoryIO.Core
 
             foreach (var orderDetail in orderTransactionDetailRequest)
             {
-                long productId = 0;
-
-                #region Product
-                if (!orderTransactionRequest.IsOrderQueue)
-                {
-                    var productDetailRequest = new ProductDetailRequest()
-                    {
-                        ProductId = orderDetail.ProductId,
-                        ProductCode = orderDetail.ProductCode,
-                        ProductDescription = orderDetail.ProductDescription,
-                        Quantity = orderDetail.Quantity,
-                        IsActive = orderDetail.IsActive,
-                        CreatedBy = orderDetail.CreatedBy,
-                        CreatedTime = DateTime.Now,
-                        ModifiedBy = null,
-                        ModifiedTime = null
-                    };
-                    productDetailResult = _productService.GetAllProductDetails().Where(p => p.ProductId == orderDetail.ProductId).FirstOrDefault();
-                    productDetailRequest = new ProductDetailRequest()
-                    {
-                        ProductId = productDetailResult.ProductId,
-                        ProductCode = productDetailResult.ProductCode,
-                        ProductDescription = productDetailResult.ProductDescription,
-                        Quantity = (productDetailResult.Quantity - orderDetail.Quantity),
-                        IsActive = productDetailResult.IsActive,
-                        CreatedBy = productDetailResult.CreatedBy,
-                        CreatedTime = productDetailResult.CreatedTime,
-                        ModifiedBy = orderDetail.CreatedBy,
-                        ModifiedTime = DateTime.Now
-                    };
-                    _productService.UpdateDetails(productDetailRequest);
-                    productId = productDetailResult.ProductId;
-
-                    if (productId <= 0)
-                    {
-                        return successReturn = 2;
-                    }
-                }
-                #endregion
+                long productId = orderDetail.ProductId;
 
                 #region Customer Price
                 var getAllCustomerPricingDetailsResult = _customerService.GetAllCustomerPricingDetails().Where(m => m.CustomerId == orderTransactionRequest.CustomerId
@@ -155,31 +117,8 @@ namespace Business.InventoryIO.Core
 
                 #endregion
 
-                #region Product Log
-                if (!orderTransactionRequest.IsOrderQueue)
-                {
-                    var productHistoryDetailRequest = new ProductHistoryDetailRequest()
-                    {
-                        ProductHistoryId = 0,
-                        ProductId = productId,
-                        QuantityAmmend = orderDetail.Quantity,
-                        QuantityPrevious = productDetailResult.Quantity,
-                        QuantityCurrent = orderDetail.Quantity,
-                        OrderTransactionTypeId = LookupKey.OrderTransactionType.SalesOrderId,
-                        OrderRemarks = string.Empty,
-                        CreatedBy = orderDetail.CreatedBy,
-                        CreatedTime = DateTime.Now,
-                        ModifiedBy = null,
-                        ModifiedTime = null
-                    };
-
-                    var productHistoryId = _productService.SaveProductHistory(productHistoryDetailRequest);
-
-                    if (productHistoryId <= 0)
-                    {
-                        return successReturn = 3;
-                    }
-                }
+                #region Delete Sales Order Details
+                _salesOrderService.Delete(m => m.SalesOrderID == salesOrderId);
                 #endregion
 
                 #region Sales Order Details

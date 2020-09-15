@@ -37,6 +37,8 @@ namespace Business.InventoryIO.Core.Dto
         public decimal? Quantity { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string OrderRemarks { get; set; }
     }
 
     public class ProductHistoryDetail: BaseDetail

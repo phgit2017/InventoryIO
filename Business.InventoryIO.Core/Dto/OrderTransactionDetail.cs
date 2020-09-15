@@ -9,6 +9,48 @@ namespace Business.InventoryIO.Core.Dto
     {
     }
 
+    public class PurchaseOrderRequest : BaseDetail
+    {
+        public PurchaseOrderRequest()
+        {
+
+        }
+
+        public long ProductId { get; set; }
+
+        [Required]
+        [StringLength(16)]
+        public string ProductCode { get; set; }
+
+        [StringLength(256)]
+        public string ProductDescription { get; set; }
+
+        [StringLength(32)]
+        public string ProductExtension { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public int? SupplierId { get; set; }
+    }
+
+    public class SalesOrderRequest : BaseDetail
+    {
+        public SalesOrderRequest()
+        {
+            OrderTransactionDetailRequest = new List<OrderTransactionDetailRequest>();
+        }
+
+        public string Messenger { get; set; }
+
+        public string PaymentTerms { get; set; }
+
+        public long CustomerId { get; set; }
+
+        public List<OrderTransactionDetailRequest> OrderTransactionDetailRequest { get; set; }
+    }
+
     public partial class OrderTransactionRequest : BaseDetail
     {
         public long OrderId { get; set; }
