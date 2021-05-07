@@ -86,41 +86,7 @@ namespace InventoryIO.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult AddNewCustomerPrice([FromBody]CustomerPriceDetailRequest request)
-        {
-            bool isSucess = false;
-            string messageAlert = string.Empty;
-            long customerIdResult = 0;
-
-            var currentUserId = HttpContext.Session.GetString(LookupKey.SessionVariables.UserId).IsNull() ? 0 : Convert.ToInt64(HttpContext.Session.GetString(LookupKey.SessionVariables.UserId));
-
-            request.CreatedBy = currentUserId;
-            request.CreatedTime = DateTime.Now;
-
-            if (ModelState.IsValid)
-            {
-
-                customerIdResult = _customerService.SaveCustomerPrice(request);
-                
-                isSucess = true;
-                var response = new
-                {
-                    isSuccess = isSucess,
-                    messageAlert = messageAlert
-                };
-
-                return Ok(response);
-            }
-            else
-            {
-                return Ok(new
-                {
-                    isSucess = isSucess,
-                    messageAlert = Messages.ErrorOccuredDuringProcessing
-                });
-            }
-        }
+        
 
         [HttpPost]
         public ActionResult UpdateCustomerPriceDetails([FromBody]CustomerPriceDetailRequest request)
