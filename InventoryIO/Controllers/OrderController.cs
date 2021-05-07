@@ -26,19 +26,26 @@ namespace InventoryIO.Controllers
 
         IProductService _productService;
         ICustomerService _customerService;
+
+        IInventoryIORepository<dbentities.PurchaseOrder> _purchaseOrderService;
+        IInventoryIORepository<dbentities.PurchaseOrderDetail> _purchaseOrderDetailService;
         IInventoryIORepository<dbentities.SalesOrder> _salesOrderService;
         IInventoryIORepository<dbentities.SalesOrderDetail> _salesOrderDetailService;
 
         public OrderController(
             IProductService productService,
             ICustomerService customerService,
-            IInventoryIORepository<dbentities.SalesOrder> salesOrderService,
+            IInventoryIORepository<dbentities.PurchaseOrder> purchaseOrderService,
+        IInventoryIORepository<dbentities.PurchaseOrderDetail> purchaseOrderDetailService,
+        IInventoryIORepository<dbentities.SalesOrder> salesOrderService,
             IInventoryIORepository<dbentities.SalesOrderDetail> salesOrderDetailService)
         {
             this._productService = productService;
             this._customerService = customerService;
             this._salesOrderService = salesOrderService;
             this._salesOrderDetailService = salesOrderDetailService;
+            this._purchaseOrderService = purchaseOrderService;
+            this._purchaseOrderDetailService = purchaseOrderDetailService;
         }
 
         #region Order
@@ -75,8 +82,8 @@ namespace InventoryIO.Controllers
                 var type = Type.GetType(string.Format("{0}.{1}, {0}", "Business.InventoryIO.Core", "PurchaseOrderService"));
                 IOrderService order = (IOrderService)Activator.CreateInstance(type,
                     _productService,
-                    _salesOrderService,
-                    _salesOrderDetailService);
+                    _purchaseOrderService,
+                    _purchaseOrderDetailService);
 
                 updateOrderTransactionResult = order.UpdateOrderTransacion(
                     orderTransactionRequest,
@@ -286,6 +293,7 @@ namespace InventoryIO.Controllers
 
 
         }
+        
         #endregion
     }
 }

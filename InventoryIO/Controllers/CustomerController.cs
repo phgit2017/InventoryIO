@@ -134,6 +134,20 @@ namespace InventoryIO.Controllers
             request.CreatedBy = currentUserId;
             request.CreatedTime = DateTime.Now;
 
+            var productPriceResult = _customerService.GetAllCustomerPricingDetails().Where(m => m.CustomerId == request.CustomerId && m.ProductId == request.ProductId).FirstOrDefault();
+            if (productPriceResult.IsNull())
+            {
+                customerIdResult = _customerService.SaveCustomerPrice(request);
+
+                isSucess = true;
+
+                return Ok(new
+                {
+                    isSuccess = isSucess,
+                    messageAlert = messageAlert
+                });
+            }
+
             customerPriceDeleteResult = _customerService.DeleteCustomerPriceDetails(request);
 
             if (!customerPriceDeleteResult)

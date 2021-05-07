@@ -43,7 +43,7 @@ namespace InventoryIO.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddNewSupplierDetails(SupplierDetailRequest request)
+        public ActionResult AddNewSupplierDetails([FromBody]SupplierDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
@@ -89,7 +89,7 @@ namespace InventoryIO.Controllers
 
 
         [HttpPost]
-        public ActionResult UpdateSupplierDetails(SupplierDetailRequest request)
+        public ActionResult UpdateSupplierDetails([FromBody]SupplierDetailRequest request)
         {
             bool isSucess = false;
             string messageAlert = string.Empty;
