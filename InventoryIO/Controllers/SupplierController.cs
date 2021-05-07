@@ -31,15 +31,9 @@ namespace InventoryIO.Controllers
         [HttpGet]
         public ActionResult SupplierList()
         {
-            List<SupplierDetail> supplierDetailResult = new List<SupplierDetail>();
+            var result = _supplierService.GetAllSupplierDetails().Where(m => m.IsActive).ToList();
             
-            supplierDetailResult = _supplierService.GetAllSupplierDetails().Where(m => m.IsActive).ToList();
-
-            var response = new
-            {
-                SupplierDetailResult = supplierDetailResult
-            };
-            return Ok(response);
+            return Ok(result);
         }
 
         [HttpPost]

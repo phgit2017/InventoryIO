@@ -30,15 +30,10 @@ namespace InventoryIO.Controllers
         [HttpGet]
         public ActionResult CustomerList()
         {
-            List<CustomerDetail> customerDetailResult = new List<CustomerDetail>();
 
-            customerDetailResult = _customerService.GetAllCustomerDetails().Where(m => m.IsActive).ToList();
-
-            var response = new
-            {
-                CustomerDetailResult = customerDetailResult
-            };
-            return Ok(response);
+            var result = _customerService.GetAllCustomerDetails().Where(m => m.IsActive).ToList();
+            
+            return Ok(result);
         }
 
         [HttpPost]
