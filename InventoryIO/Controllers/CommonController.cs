@@ -86,14 +86,24 @@ namespace InventoryIO.Controllers
         }
 
         [HttpGet]
+        [Route("Common/CustomerAndProductPriceDetails/{customerId}/{productId}")]
         public ActionResult CustomerAndProductPriceDetails(long customerId, long productId)
         {
-            //List<CustomerPricingDetail> customerPricingDetailResult = new List<CustomerPricingDetail>();
-            CustomerPricingDetail customerPricingDetailResult = new CustomerPricingDetail();
+            List<CustomerPricingDetail> customerPricingDetailResult = new List<CustomerPricingDetail>();
+            //CustomerPricingDetail customerPricingDetailResult = new CustomerPricingDetail();
 
-            customerPricingDetailResult = _customerService.GetAllCustomerPricingDetails()
+            if (productId == 0)
+            {
+                customerPricingDetailResult = _customerService.GetAllCustomerPricingDetails()
+                .Where(m => m.CustomerId == customerId).ToList();
+            }
+            else
+            {
+                customerPricingDetailResult = _customerService.GetAllCustomerPricingDetails()
                 .Where(m => m.CustomerId == customerId
-                        && m.ProductId == productId).FirstOrDefault();
+                        && m.ProductId == productId).ToList();
+            }
+            
 
 
             var response = new
